@@ -10,7 +10,9 @@
           class="form-control"
           placeholder="Username"
           required
+          @focus="resetErrorMessage()"
         />
+        <small>Le nom d'utilisateur doit commencer par 'E'</small>
         <label>Nom d'utilisateur</label>
       </div>
       <div class="form-floating">
@@ -66,7 +68,7 @@
 import router from '../router/index.js'
 
 export default {
-  name: "Student register",
+  name: "StudentRegister",
   data() {
     return {
       username: "",
@@ -87,16 +89,24 @@ export default {
         lastName: this.lastName,
         department: this.department
       }
+      
       if (!newStudent.username.startsWith('E')) {
-        this.errorMessage = "Student username must start with 'E' "
-      } else {
+        console.log(newStudent.username)
+        this.errorMessage = "Commencer votre username par 'E' "
+      } else if (newStudent.username.startsWith('E')) {
       fetch("http://localhost:9898/api/signUp/student", {
         method: 'POST', 
         headers: {'Content-type' : 'application/json'}, 
         body: JSON.stringify(newStudent)})
+        router.push('students')
       }
-      router.push('students')
+      else {
+        this.errorMessage = "Error"
+      }
     },
+    resetErrorMessage() {
+      this.errorMessage = ""
+    }
   },
 };
 </script>
