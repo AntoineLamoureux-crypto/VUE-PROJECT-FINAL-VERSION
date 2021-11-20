@@ -65,11 +65,10 @@
 </template>
 
 <script>
-
 import router from '../router/index.js'
 
 export default {
-  name: "Supervisor register",
+  name: "SupervisorRegister",
   data() {
     return {
       username: "",
@@ -91,7 +90,7 @@ export default {
       };
       if (!newSupervisor.username.startsWith("S")) {
         this.errorMessage = "Supervisor username must start with 'S' ";
-      } else {
+      } else if (newSupervisor.username.startsWith("S")) {
         fetch("http://localhost:9898/api/signUp/supervisor", {
           method: "POST",
           headers: { "Content-type": "application/json" },
@@ -100,6 +99,8 @@ export default {
         .then(data => (this.currentSupervisor = data.currentSupervisor));
         router.push('home')
       }
+      else 
+      this.errorMessage = "Error ";
     },
   },
 };

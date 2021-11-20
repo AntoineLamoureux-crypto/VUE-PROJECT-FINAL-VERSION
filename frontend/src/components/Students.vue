@@ -7,6 +7,7 @@
         <th>Student Fist Name</th>
         <th>Student Last Name</th>
         <th>Student Department</th>
+        <th>View details</th>
       </thead>
       <tbody>
         <tr v-for="student in students" v-bind:key="student.id">
@@ -14,6 +15,15 @@
           <td>{{ student.firstName }}</td>
           <td>{{ student.lastName }}</td>
           <td>{{ student.department }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="detailsClicked(student)"
+            >
+              More
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -21,26 +31,36 @@
 </template>
 
 <script>
-import UserService from '../services/UserService'
+import UserService from "../services/UserService";
+import router from "../router/index.js"
 
 export default {
-    name: 'Students',
-    data() {
-        return {
-            students : []
-        }
+  name: "Students",
+  data() {
+    return {
+      students: [],
+    };
+  },
+  methods: {
+    getStudents() {
+      UserService.getStudents().then((response) => {
+        this.students = response.data;
+      });
     },
-    methods: {
-        getStudents() {
-            UserService.getStudents().then((response) => {
-                this.students = response.data;
-            });
-        }
+    detailsClicked(student) {
+      console.log(student)
+      router.push({
+        name: "StudentModel",
+        params: {
+          student: student,
+        },
+      });
     },
-    created() {
-        this.getStudents()
-    }
-}
+  },
+  created() {
+    this.getStudents();
+  },
+};
 </script>
 
 <style>

@@ -72,7 +72,7 @@
 
 <script>
 export default {
-  name: "Monitor register",
+  name: "MonitoRegister",
   data() {
     return {
       username: "",
@@ -96,7 +96,7 @@ export default {
       }
       if (!newMonitor.username.startsWith('M')) {
         this.errorMessage = "Monitor username must start with 'M' "
-      } else {
+      } else if (newMonitor.username.startsWith('M')){
       fetch("http://localhost:9898/api/signUp/monitor", {
         method: 'POST', 
         headers: {'Content-type' : 'application/json'}, 

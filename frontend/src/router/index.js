@@ -7,6 +7,7 @@ import StudentRegister from '../views/StudentRegister.vue'
 import MonitorRegister from '../views/MonitorRegister.vue'
 import SupervisorRegister from '../views/SupervisorRegister.vue'
 import Students from '../components/Students.vue'
+import StudentModel from '../components/StudentModel.vue'
 
 Vue.use(VueRouter)
 
@@ -14,37 +15,50 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    props: true
   },
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    props: true
   },
   {
     path: '/students',
     name: 'Students',
-    component: Students
+    component: Students,
+    props: true
+  },
+  {
+    path: '/studentDetails',
+    name: 'StudentModel',
+    component: StudentModel,
+    props: true
   },
   {
     path: '/register',
     name: 'Register',
-    component: Register
+    component: Register,
+    props: true
   },
   {
     path: '/signUpStudent',
-    name: 'Student register',
-    component: StudentRegister
+    name: 'StudentRegister',
+    component: StudentRegister,
+    props: true
   },
   {
     path: '/signUpMonitor',
-    name: 'Monitor register',
-    component: MonitorRegister
+    name: 'MonitorRegister',
+    component: MonitorRegister,
+    props: true
   },
   {
     path: '/signUpSupervisor',
-    name: 'Supervisor register',
-    component: SupervisorRegister
+    name: 'SupervisorRegister',
+    component: SupervisorRegister,
+    props: true
   },
 ]
 
