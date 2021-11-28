@@ -71,6 +71,8 @@
 </template>
 
 <script>
+import router from "../router/index.js"
+
 export default {
   name: "MonitoRegister",
   data() {
@@ -97,10 +99,18 @@ export default {
       if (!newMonitor.username.startsWith('M')) {
         this.errorMessage = "Monitor username must start with 'M' "
       } else if (newMonitor.username.startsWith('M')){
-      fetch("http://localhost:9898/api/signUp/monitor", {
+      fetch("http://localhost:9090/signUp/monitor", {
         method: 'POST', 
         headers: {'Content-type' : 'application/json'}, 
         body: JSON.stringify(newMonitor)})
+        router.push({
+            /*name: "MonitorHome",
+            params: {
+              username: newMonitor.username,
+              monitor: newMonitor
+            },*/
+            name: "/",
+          });
       }
     },
   },

@@ -48,13 +48,9 @@ export default {
       password: "",
       errorMessage: "",
       userType: "",
-      currentUser : {
-        username: "",
-        password: "",
-        id: ""
-      }
     };
   },
+  
   methods: {
     onSubmit(e) {
       e.preventDefault();
@@ -63,55 +59,65 @@ export default {
         password: this.password,
       };
 
-
-      if (loginInfo.username.startsWith("E") || loginInfo.username.startsWith('e')) {
+      if (
+        loginInfo.username.startsWith("E") ||
+        loginInfo.username.startsWith("e")
+      ) {
         this.userType = "student";
       }
-      if (loginInfo.username.startsWith("S") || loginInfo.username.startsWith('s')) {
+      if (
+        loginInfo.username.startsWith("S") ||
+        loginInfo.username.startsWith("s")
+      ) {
         this.userType = "supervisor";
       }
-      if (loginInfo.username.startsWith("M") || loginInfo.username.startsWith('m')) {
+      if (
+        loginInfo.username.startsWith("M") ||
+        loginInfo.username.startsWith("m")
+      ) {
         this.userType = "monitor";
       }
-      if (loginInfo.username.startsWith("G") || loginInfo.username.startsWith('g')) {
+      if (
+        loginInfo.username.startsWith("G") ||
+        loginInfo.username.startsWith("g")
+      ) {
         this.userType = "manager";
-      } else if (this.userType === ""){
+      } else if (this.userType === "") {
         this.userType = "NONE";
       }
 
-      console.log('User type with this : -> ' + this.userType)
+      let newUserLoggedIn = {
+        username: this.username,
+        password: this.password,
+        id : undefined
+      };
+
+      console.log("newUserLoggedIn : -> " + newUserLoggedIn.username);
 
       if (this.userType == "NONE") {
         this.errorMessage = "User as to start with [ 'E' , 'S', 'M', 'G' ]";
       } else {
         fetch(
-          "http://localhost:9898/api/login/" +
+          "http://localhost:9090/login/" +
             this.userType +
             "/" +
-            loginInfo.username +
+            newUserLoggedIn.username +
             "/" +
-            loginInfo.password,
+            newUserLoggedIn.password,
           {
             method: "GET",
-            headers: { "Content-type": "application/json" },
-          }
-        )
-          .then((response) => response.json())
-          .then((data) => (this.currentUser = data));
-
-
-        console.log("Current user with this prop : -> " + this.currentUser.username)
-          
-        if (this.currentUser.id == null) {
-          this.errorMessage = "Username does not exists";
-        } else {
-          router.push({
-            name: "StudentModel",
-            params: {
-              student: loginInfo,
+            headers: {
+              "Content-type": "application/json",
             },
-          });
-        }
+          }
+        ) .then((response) => response.json())
+        .then((data) => (newUserLoggedIn = data));
+        console.log(newUserLoggedIn.id)
+        sessionStorage.setItem("userName", JSON.stringify(newUserLoggedIn.username));
+        router.push({
+          name: "StudentHome",
+          params: { username: newUserLoggedIn.username},
+        });
       }
     },
     resetErrorMessage() {

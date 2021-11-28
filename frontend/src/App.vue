@@ -1,16 +1,23 @@
 <template>
   <div id="app">
-    <Nav />
-    <router-view/>
+    <div class="routing" v-if="this.$route.path == '/' || this.$route.path == '/register'">
+        <Nav />
+    </div>
+    <div class="routing" v-if="this.$route.path.startsWith('/student')">
+        <StudentNav />
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import Nav from './views/Nav.vue'
+import StudentNav from './views/StudentNav.vue'
 
 export default {
   components: {
-    Nav
+    Nav,
+    StudentNav
   }
 }
 

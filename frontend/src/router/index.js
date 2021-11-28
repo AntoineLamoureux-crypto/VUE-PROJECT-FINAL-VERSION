@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import StudentRegister from '../views/StudentRegister.vue'
@@ -8,21 +7,18 @@ import MonitorRegister from '../views/MonitorRegister.vue'
 import SupervisorRegister from '../views/SupervisorRegister.vue'
 import Students from '../components/Students.vue'
 import StudentModel from '../components/StudentModel.vue'
+import StudentHome from '../views/StudentHome.vue'
+import CVList from '../components/CV/CVList.vue'
+import CVModalDeposit from '../components/CV/CVModalDeposit.vue'
 
 Vue.use(VueRouter)
+
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
-    props: true
-  },
-  {
-    path: '/login',
     name: 'Login',
     component: Login,
-    props: true
   },
   {
     path: '/students',
@@ -60,6 +56,24 @@ const routes = [
     component: SupervisorRegister,
     props: true
   },
+  {
+    path: '/studentHome/:username',
+    name: 'StudentHome',
+    component: StudentHome,
+    props: true
+  },
+  {
+    name: 'CVList',
+    path: '/CVList',
+    component: CVList,
+    props: true
+  },
+  {
+    path: '/cvModalDeposit',
+    name: 'CVModalDeposit', 
+    component: CVModalDeposit,
+    props: true
+  }
 ]
 
 const router = new VueRouter({

@@ -67,6 +67,7 @@
 
 import router from '../router/index.js'
 
+
 export default {
   name: "StudentRegister",
   data() {
@@ -82,7 +83,7 @@ export default {
   methods: {
     onSubmit(e) {
       e.preventDefault();
-      const newStudent = {
+      let newStudent = {
         username: this.username,
         password: this.password,
         firstName: this.firstName,
@@ -91,14 +92,22 @@ export default {
       }
       
       if (!newStudent.username.startsWith('E')) {
-        console.log(newStudent.username)
         this.errorMessage = "Commencer votre username par 'E' "
       } else if (newStudent.username.startsWith('E')) {
-      fetch("http://localhost:9898/api/signUp/student", {
+      fetch("http://localhost:9090/signUp/student", {
         method: 'POST', 
         headers: {'Content-type' : 'application/json'}, 
         body: JSON.stringify(newStudent)})
-        router.push('students')
+        .then((response) => response.json())
+        .then((data) => (newStudent = data));
+        router.push({
+            name: "StudentHome",
+            params: {
+              username: newStudent.username,
+              student: newStudent
+            },
+          });
+          console.log(newStudent)
       }
       else {
         this.errorMessage = "Error"

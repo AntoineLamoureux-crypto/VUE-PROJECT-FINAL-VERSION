@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const GET_ALL_STUDENT_API_URL = 'http://localhost:9898/api/getAll/students'
+const GET_ALL_STUDENT_API_URL = 'http://localhost:9090/getAll/students'
 
 class UserService {
     getStudents() {

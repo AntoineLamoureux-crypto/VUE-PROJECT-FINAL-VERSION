@@ -91,13 +91,20 @@ export default {
       if (!newSupervisor.username.startsWith("S")) {
         this.errorMessage = "Supervisor username must start with 'S' ";
       } else if (newSupervisor.username.startsWith("S")) {
-        fetch("http://localhost:9898/api/signUp/supervisor", {
+        fetch("http://localhost:9090/signUp/supervisor", {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify(newSupervisor),
         }).then(response => response.json())
-        .then(data => (this.currentSupervisor = data.currentSupervisor));
-        router.push('home')
+        .then(data => (this.currentSupervisor = data));
+        router.push({
+            /*name: "SupervisorHome",
+            params: {
+              username: newSupervisor.username,
+              supervisor: newSupervisor
+            },*/
+            name: "/",
+          });
       }
       else 
       this.errorMessage = "Error ";
